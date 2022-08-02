@@ -1,40 +1,33 @@
-
-import React, { useState } from 'react';
-
+import React, { useState } from "react";
 
 const AuthorizationContext = React.createContext({
   hasAuthorization: false,
   obtainAuthorization: () => {},
   removeAuthorization: () => {},
-  warningText: '',
-  warningAuthorization: ( warning ) => {}
+  warningText: "",
+  warningAuthorization: (warning) => {},
 });
 
 export const AuthorizationContextProvider = (props) => {
-  
-const [hasAuthorization, setHasAuthorization] = useState(false);
-const [warningText, setWarningText] = useState('');
+  const [hasAuthorization, setHasAuthorization] = useState(false);
+  const [warningText, setWarningText] = useState("");
 
+  const obtainHandler = () => {
+    setHasAuthorization(true);
+    setWarningText("");
+  };
 
-const obtainHandler = () => {
-  setHasAuthorization(true);
-  setWarningText('');
-};
-
-const removeHandler = () => {
+  const removeHandler = () => {
     setHasAuthorization(false);
-};
+  };
 
-const warningHandler = (warning) => {
-
-  const timerId = setTimeout(() => {
-    setWarningText('');
-    clearTimeout(timerId);
-  }, 5000);
-  setWarningText(warning);
-
-};
-
+  const warningHandler = (warning) => {
+    const timerId = setTimeout(() => {
+      setWarningText("");
+      clearTimeout(timerId);
+    }, 5000);
+    setWarningText(warning);
+  };
 
   return (
     <AuthorizationContext.Provider
@@ -43,7 +36,7 @@ const warningHandler = (warning) => {
         obtainAuthorization: obtainHandler,
         removeAuthorization: removeHandler,
         warningText: warningText,
-        warningAuthorization: warningHandler
+        warningAuthorization: warningHandler,
       }}
     >
       {props.children}
